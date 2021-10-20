@@ -28,16 +28,23 @@
                     </a>
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
-                            <a href="{{ route('admin.users') }}" class="nav-link">
+                            <a href="{{ route('admin.users') }}" class="nav-link {{ request()->is('admin.users') || request()->is('admin.users/*') ? 'active' : '' }}">
                                 <i class="far fa-user nav-icon"></i>
                                 <p>Users</p>
                             </a>
-                        </li>                         
+                        </li> 
 
                         <li class="nav-item">
-                            <a href="{{ route('admin.users') }}" class="nav-link">
-                                <i class="fa fa-lock nav-icon"></i>
+                            <a href="{{ route("admin.permissions.index") }}" class="nav-link {{ request()->is('admin/permissions') || request()->is('admin/permissions/*') ? 'active' : '' }}">
+                                <i class="fa-fw fas fa-unlock-alt nav-icon"></i>
                                 <p>Permisions</p>
+                            </a>
+                        </li>
+
+                         <li class="nav-item">
+                            <a href="{{ route("admin.roles.index") }}" class="nav-link {{ request()->is('admin/roles') || request()->is('admin/roles/*') ? 'active' : '' }}">
+                                <i class="fa-fw fas fa-briefcase nav-icon"></i>
+                                <p>Roles</p>
                             </a>
                         </li>
 

@@ -9,6 +9,7 @@
     "license": "MIT",
     "require": {
         "php": "^7.3|^8.0",
+        "beyondcode/laravel-websockets": "^1.12",
         "fideloper/proxy": "^4.4",
         "fruitcake/laravel-cors": "^2.0",
         "guzzlehttp/guzzle": "^7.3",
@@ -16,6 +17,13 @@
         "laravel/passport": "^10.1",
         "laravel/tinker": "^2.5",
         "laravel/ui": "^3.2",
+        "laravelcollective/html": "^6.2",
+        "pusher/pusher-php-server": "^5.0",
+        "spatie/laravel-permission": "^5.1",
+        "wisembly/elephant.io": "^3.3",
+        "workerman/channel": "^1.1",
+        "workerman/phpsocket.io": "^1.1",
+        "workerman/workerman": "^4.0",
         "yajra/laravel-datatables-oracle": "^9.18"
     },
     "require-dev": {

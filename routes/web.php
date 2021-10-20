@@ -78,9 +78,12 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 
 
 // admin protected routes
-Route::group(['middleware' => ['auth', 'admin'], 'prefix' => 'admin'], function () {
+Route::group(['middleware' => ['auth', 'admin'], 'prefix' => 'admin','as' => 'admin.'], function () {
     Route::get('/', 'App\Http\Controllers\Admin\HomeadminController@index')->name('admin_dashboard');
     
-    Route::get('/users', 'App\Http\Controllers\Admin\UserController@index')->name('admin.users');
+    Route::get('users', 'App\Http\Controllers\Admin\UserController@index')->name('users');
+    
+    Route::resource('roles', App\Http\Controllers\Admin\RoleController::class);
+    Route::resource('permissions', App\Http\Controllers\Admin\PermissionController::class);
 });
 
