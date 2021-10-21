@@ -46,13 +46,13 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    public function isAdmin() {
+    /*public function isAdmin() {
         return $this->role === 'admin';
     }
 
     public function isUser() {
         return $this->role === 'user';
-    }
+    }*/
 
    
     public function  getTotalUnseenAttribute(){
@@ -66,5 +66,10 @@ class User extends Authenticatable
     public function posts()
     {
         return $this->hasMany(Post::class);
-    }    
+    }   
+
+    public function role()
+    {
+        return $this->belongsToMany(Role::class, 'role_user');
+    } 
 }

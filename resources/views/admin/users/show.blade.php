@@ -2,9 +2,9 @@
 
 @section('content')  
 	
-	<div class="card">
+<div class="card">
     <div class="card-header">
-        {{ trans('global.show') }} {{ trans('cruds.role.title') }}
+        {{ trans('global.show') }} {{ trans('cruds.user.title') }}
     </div>
 
     <div class="card-body">
@@ -13,27 +13,35 @@
                 <tbody>
                     <tr>
                         <th>
-                            {{ trans('cruds.role.fields.id') }}
+                            {{ trans('cruds.user.fields.id') }}
                         </th>
                         <td>
-                            {{ $role->id }}
+                            {{ $user->id }}
                         </td>
                     </tr>
                     <tr>
                         <th>
-                            {{ trans('cruds.role.fields.title') }}
+                            {{ trans('cruds.user.fields.name') }}
                         </th>
                         <td>
-                            {{ $role->name }}
+                            {{ $user->name }}
                         </td>
                     </tr>
                     <tr>
                         <th>
-                            Permissions
+                            {{ trans('cruds.user.fields.email') }}
                         </th>
                         <td>
-                            @foreach($role->permissions()->pluck('name') as $permission)
-                                <span class="label label-info label-many">{{ $permission }}</span>
+                            {{ $user->email }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            Roles
+                        </th>
+                        <td>
+                            @foreach($user->roles()->pluck('name') as $role)
+                                <span class="label label-info label-many">{{ $role }}</span>
                             @endforeach
                         </td>
                     </tr>
@@ -44,17 +52,9 @@
             </a>
         </div>
 
-        <nav class="mb-3">
-            <div class="nav nav-tabs">
 
-            </div>
-        </nav>
-        <div class="tab-content">
-
-        </div>
     </div>
 </div>
-   
 @endsection
 
 @push('scripts')

@@ -5,9 +5,13 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
-use App\Models\Permission;
-use App\Models\Role;
+
 use App\Models\User;
+use Spatie\Permission\Models\Role;
+
+use App\Http\Requests\Admin\StoreUsersRequest;
+use App\Http\Requests\Admin\UpdateUsersRequest;
+use Illuminate\Support\Facades\Gate;
 
 
 class UserController extends Controller
@@ -19,7 +23,13 @@ class UserController extends Controller
      */
     public function index()
     {
-        
+        if (! Gate::allows('users_manage')) {
+            return abort(401);
+        }
+
+        $users = User::all();
+
+        return view('admin.users.index', compact('users'));
     }
 
     /**
@@ -29,7 +39,12 @@ class UserController extends Controller
      */
     public function create()
     {
-        //
+        if (! Gate::allows('users_manage')) {
+            return abort(401);
+        }
+        $roles = Role::get()->pluck('name', 'name');
+
+        return view('admin.users.create', compact('roles'));
     }
 
     /**
@@ -38,9 +53,17 @@ class UserController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreUsersRequest $request)
     {
-        //
+        if (! Gate::allows('users_manage')) {
+            return abort(401);
+        }
+        $request->merge(['password' => bcrypt($request->password) ]);
+        $user = User::create($request->all());
+        $roles = $request->input('roles') ? $request->input('roles') : [];
+        $user->assignRole($roles);
+
+        return redirect()->route('admin.users.index');
     }
 
     /**
@@ -49,9 +72,14 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
-    {
-        //
+    public function show(User $user){
+        if (! Gate::allows('users_manage')) {
+            return abort(401);
+        }
+
+        $user->load('roles');
+
+        return view('admin.users.show', compact('user'));
     }
 
     /**
@@ -60,9 +88,14 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(User $user)
     {
-        //
+        if (! Gate::allows('users_manage')) {
+            return abort(401);
+        }
+        $roles = Role::get()->pluck('name', 'name');
+
+        return view('admin.users.edit', compact('user', 'roles'));
     }
 
     /**
@@ -72,9 +105,18 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UpdateUsersRequest $request, User $user)
     {
-        //
+        if (! Gate::allows('users_manage')) {
+           return abort(401);
+       }
+       $request->merge(['password' => bcrypt($request->password) ]);
+       
+       $user->update($request->all());
+       $roles = $request->input('roles') ? $request->input('roles') : [];
+       $user->syncRoles($roles);
+
+       return redirect()->route('admin.users.index');
     }
 
     /**
@@ -85,7 +127,12 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-        //
+        if (! Gate::allows('users_manage')) {
+            return abort(401);
+        }
+        $user->delete();
+
+        return redirect()->route('admin.users.index');
     }
 
 

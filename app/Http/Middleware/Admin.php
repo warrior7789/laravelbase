@@ -6,6 +6,7 @@ use Closure;
 use Illuminate\Http\Request;
 use Auth;
 
+use Illuminate\Support\Facades\Gate;
 class Admin 
 {
     /**
@@ -17,15 +18,11 @@ class Admin
      */
     public function handle(Request $request, Closure $next)
     {
-        if( Auth::check() ){
-            // if user is not admin take him to his dashboard
-            if ( Auth::user()->isAdmin() ) {
+        if( Auth::check() ){            
+            if ( Auth::user()->hasRole('Super Admin') || Auth::user()->hasRole('Sub Admin') ) {
                 return $next($request);
-            }
-
-            // allow admin to proceed with request
-            else if ( Auth::user()->isUser()  ) {                 
-                return redirect(route('/'));
+            }else if ( Auth::user()->hasRole('user')  ) {                 
+                return redirect(route('home'));
             }
         }
 
