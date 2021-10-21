@@ -28,6 +28,11 @@ Route::get('/clear-cache-all', function() {
     dd("Cache Clear All");
 });
 
+Route::get('/make-model', function() {
+    Artisan::call('make:model photo -m -r');  
+    dd("model create All");
+});
+
 
 
 

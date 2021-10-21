@@ -13,17 +13,7 @@ Breadcrumbs::for('home', function (BreadcrumbTrail $trail) {
     $trail->push('Home', route('home'));
 });
 
-// Home > Blog
-Breadcrumbs::for('blog', function (BreadcrumbTrail $trail) {
-    $trail->parent('home');
-    $trail->push('Blog', route('blog'));
-});
 
-// Home > Blog > [Category]
-Breadcrumbs::for('category', function (BreadcrumbTrail $trail, $category) {
-    $trail->parent('blog');
-    $trail->push($category->title, route('category', $category));
-});
 
 
 Breadcrumbs::for('admin.admin_dashboard', function ($trail) {
@@ -31,7 +21,7 @@ Breadcrumbs::for('admin.admin_dashboard', function ($trail) {
 });
 
 
-// user 
+// users 
 Breadcrumbs::for('admin.users.index', function ($trail) {
 	$trail->parent('admin.admin_dashboard');
     $trail->push('User List', route('admin.users.index'));
@@ -53,7 +43,7 @@ Breadcrumbs::for('admin.users.create', function ($trail) {
 });
 
 
-// premision 
+// permissions 
 Breadcrumbs::for('admin.permissions.index', function ($trail) {
 	$trail->parent('admin.admin_dashboard');
     $trail->push('Permissions List', route('admin.permissions.index'));
@@ -91,7 +81,6 @@ Breadcrumbs::for('admin.roles.show', function ($trail,$roles) {
 	$trail->push('roles', route('admin.roles.index'));
     $trail->push($roles->name, route('admin.roles.show',$roles));
 });
-
 Breadcrumbs::for('admin.roles.create', function ($trail) {
 	$trail->parent('admin.admin_dashboard');
 	$trail->push('roles', route('admin.roles.index'));

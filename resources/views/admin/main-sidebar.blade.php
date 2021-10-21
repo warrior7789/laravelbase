@@ -29,7 +29,7 @@
                     <ul class="nav nav-treeview">
                         @can('users_manage')
                             <li class="nav-item">
-                                <a href="{{ route('admin.users.index') }}" class="nav-link {{ request()->is('admin.users') || request()->is('admin.users/*') ? 'active' : '' }}">
+                                <a href="{{ route('admin.users.index') }}" class="nav-link {{ request()->is('admin/users') || request()->is('admin.users/*') ? 'active' : '' }}">
                                     <i class="far fa-user nav-icon"></i>
                                     <p>Users</p>
                                 </a>
